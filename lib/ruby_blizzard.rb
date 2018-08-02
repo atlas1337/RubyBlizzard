@@ -2,7 +2,7 @@ require 'bundler'
 require 'json'
 require 'nokogiri'
 require 'rest-client'
-require 'activesupport'
+require 'active_support'
 
 #WoW
 require_relative './wow/achievement.rb'
