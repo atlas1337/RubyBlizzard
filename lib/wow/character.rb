@@ -15,8 +15,8 @@ module RubyBlizzard
         	  result = RubyBlizzard.error_check(character)
         	  return result if result.key? 'error_code'
 		      character = JSON.parse(character)
-		      character['class'] = classes.find { |x| x['id'] == character[:class] }['name']
-		      character['race'] = races.find { |x| x['id'] == character[:race] }['name']
+		      character['class'] = classes['classes'].find { |x| x['id'] == character['class'] }['name']
+		      character['race'] = races['races'].find { |x| x['id'] == character['race'] }['name']
 		      return character
 		    end
 		end
