@@ -1,7 +1,7 @@
 module RubyBlizzard
 	module Wow
 		class Character
-			def self.find(name:, realm:, fields: '')
+			def self.find(character_name:, realm:, fields: '')
 			  queries = ''
 			  if fields.empty?
 			  	queries = RubyBlizzard.merge_queries(fields)
@@ -10,7 +10,7 @@ module RubyBlizzard
 			  end
 			  classes = RubyBlizzard::Wow::DataResources.find_classes
 		      races = RubyBlizzard::Wow::DataResources.find_races
-		      uri = RubyBlizzard.base_uri("wow/character/#{realm}/#{name}")
+		      uri = RubyBlizzard.base_uri("wow/character/#{realm}/#{character_name}")
 		      character = RestClient.get(uri + queries){|response, request, result| response }
         	  result = RubyBlizzard.error_check(character)
         	  return result if result.key? 'error_code'
