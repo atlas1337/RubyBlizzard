@@ -56,15 +56,4 @@ module RubyBlizzard
       JSON.parse(input.body)
     end
   end
-
-  def item(options = {})
-    options = {item_name: nil}.merge(options)
-    raise ArgumentError, 'Please enter an item name' unless !options[:item_name].blank?
-    url = URI.encode('http://www.wowhead.com/item=' + options[:item_name] + '&xml')
-    item_xml = Nokogiri::XML(RestClient.get(url))
-    item_json_raw =item_xml.xpath('//wowhead//json').text
-    item_id = JSON.parse('{' + item_json_raw + '}')['id']
-    item = RestClient.get('https://us.api.battle.net/wow/item/' + item_id.to_s + '?locale=' + @locale + '&apikey=' + @api_key)
-    item = JSON.parse(item)
-  end
 end
