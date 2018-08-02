@@ -17,6 +17,8 @@ module RubyBlizzard
 		      character = JSON.parse(character)
 		      character['class'] = classes['classes'].find { |x| x['id'] == character['class'] }['name']
 		      character['race'] = races['races'].find { |x| x['id'] == character['race'] }['name']
+		      character['gender'] = RubyBlizzard.genders.find { |x| x['id'] == character['gender'] }['gender']
+		      character['faction'] = RubyBlizzard.factions.find { |x| x['id'] == character['race'] }['faction']
 		      return character
 		    end
 		end

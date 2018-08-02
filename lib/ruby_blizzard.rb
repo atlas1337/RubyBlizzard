@@ -21,9 +21,11 @@ require_relative './wow/spell.rb'
 
 module RubyBlizzard
   class << self
+    attr_accessor :factions
+    attr_accessor :genders
+    attr_accessor :locale
     attr_accessor :queries
     attr_accessor :region
-    attr_accessor :locale
   end
 
   ERRORS = {
@@ -35,6 +37,15 @@ module RubyBlizzard
     self.region = region
     self.locale = locale
     self.queries = "?locale=#{self.locale}&apikey=#{api_key}"
+    self.genders = {
+      {id: 0, gender: 'Male'},
+      {id: 1, gender: 'Female'}
+    }
+
+    self.factions = {
+      {id: 0, faction: 'Alliance'},
+      {id: 1, faction: 'Horde'}
+    }
   end
 
   def self.config(region: 'us')
