@@ -38,13 +38,17 @@ module RubyBlizzard
     self.locale = locale
     self.queries = "?locale=#{self.locale}&apikey=#{api_key}"
     self.genders = {
-      {id: 0, gender: 'Male'},
-      {id: 1, gender: 'Female'}
+      'genders' => [
+        {'id' => 0, 'gender' => 'Male'},
+        {'id' => 1, 'gender' => 'Female'}
+      ]
     }
 
     self.factions = {
-      {id: 0, faction: 'Alliance'},
-      {id: 1, faction: 'Horde'}
+      'factions' => [
+        {'id' => 0, 'faction' => 'Alliance'},
+        {'id' => 1, 'faction' => 'Horde'}
+      ]
     }
   end
 
