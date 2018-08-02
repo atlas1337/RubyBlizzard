@@ -51,7 +51,7 @@ module RubyBlizzard
 
   def self.error_check(input)
     if ERRORS.key?(input.code)
-      {input.code => ERRORS[input.code]}
+      {'error_code' => input.code, 'error' => ERRORS[input.code]}
     else
       JSON.parse(input.body)
     end

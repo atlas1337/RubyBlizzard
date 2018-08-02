@@ -8,12 +8,16 @@ module RubyBlizzard
 			  elsif !fields.empty?
 			  	queries = RubyBlizzard.merge_queries('&fields=' + fields)
 			  end
+			  classes = RubyBlizzard::Wow::DataResources.find_classes
+		      races = RubyBlizzard::Wow::DataResources.find_races
 		      uri = RubyBlizzard.base_uri("wow/character/#{realm}/#{name}")
 		      character = RestClient.get(uri + queries){|response, request, result| response }
-        	  return {character.code => ERRORS[character.code]} if ERRORS.key?(character.code)
+        	  result = RubyBlizzard.error_check(character)
+        	  return result if result.key? 'error_code'
 		      character = JSON.parse(character)
-		      #character['class'] = @classes.find { |x| x[:id] == character[:class] }['name']
-		      #character['race'] = @races.find { |x| x[:id] == character[:race] }['name']
+		      character['class'] = classes.find { |x| x[:id] == character[:class] }['name']
+		      character['race'] = races.find { |x| x[:id] == character[:race] }['name']
+		      return character
 		    end
 		end
 	end
