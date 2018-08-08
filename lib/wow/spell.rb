@@ -3,8 +3,9 @@ module RubyBlizzard
     class Spell
       def self.find(id:)
         uri = RubyBlizzard.base_uri("wow/spell/id#{RubyBlizzard.queries}")
-        spell = RestClient.get(uri){|response, request, result| response }
-		RubyBlizzard.error_check(spell)
+        response = RestClient.get(uri){|response, request, result| response }
+        return {'error_code' => response.code, 'error' => ERRORS[response.code]} if ERRORS.key?(response.code)
+        JSON.parse(response.body)
       end
     end
   end

@@ -3,8 +3,9 @@ module RubyBlizzard
     class Recipe
       def self.find(id:)
         uri = RubyBlizzard.base_uri("wow/recipe/id#{RubyBlizzard.queries}")
-        recipe = RestClient.get(uri){|response, request, result| response }
-		RubyBlizzard.error_check(recipe)
+        response = RestClient.get(uri){|response, request, result| response }
+        return {'error_code' => response.code, 'error' => ERRORS[response.code]} if ERRORS.key?(response.code)
+        JSON.parse(response.body)
       end
     end
   end

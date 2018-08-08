@@ -4,8 +4,9 @@ module RubyBlizzard
       def self.find(guild_name:, realm:, fields: '')
         queries = RubyBlizzard.merge_queries(fields)
         uri = RubyBlizzard.base_uri("wow/guild/#{realm}/#{guild_name}#{queries}")
-        guild = RestClient.get(uri){|response, request, result| response }
-        RubyBlizzard.error_check(guild)
+        response = RestClient.get(uri){|response, request, result| response }
+        return {'error_code' => response.code, 'error' => ERRORS[response.code]} if ERRORS.key?(response.code)
+        JSON.parse(response.body)
       end
     end
   end

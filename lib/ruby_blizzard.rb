@@ -1,8 +1,9 @@
 require 'bundler'
+require 'active_support'
 require 'json'
 require 'nokogiri'
 require 'rest-client'
-require 'active_support'
+require 'yajl'
 
 #WoW
 require_relative './wow/achievement.rb'
@@ -26,6 +27,7 @@ module RubyBlizzard
     attr_accessor :locale
     attr_accessor :queries
     attr_accessor :region
+    attr_accessor :stats
   end
 
   ERRORS = {
@@ -50,6 +52,7 @@ module RubyBlizzard
         {'id' => 1, 'faction' => 'Horde'}
       ]
     }
+    self.stats = Yajl::Parser.parse(File.new(File.dirname(__FILE__) + '/wow/resources/stats.json', 'r'))
   end
 
   def self.config(region: 'us')
@@ -62,13 +65,5 @@ module RubyBlizzard
 
   def self.base_uri(path)
     "https://#{self.region}.api.battle.net/#{path}"
-  end
-
-  def self.error_check(input)
-    if ERRORS.key?(input.code)
-      {'error_code' => input.code, 'error' => ERRORS[input.code]}
-    else
-      JSON.parse(input.body)
-    end
   end
 end
