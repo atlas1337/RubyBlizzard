@@ -18,6 +18,7 @@ module RubyBlizzard
         character['race'] = races['races'].find { |x| x['id'] == character['race'] }['name']
         character['gender'] = RubyBlizzard.genders['genders'].find { |x| x['id'] == character['gender'] }['gender']
         character['faction'] = RubyBlizzard.factions['factions'].find { |x| x['id'] == character['faction'] }['faction']
+        character['thumbnail'] = "https://render-#{RubyBlizzard.region}.worldofwarcraft.com/character/#{character['thumbnail']}"
         return character
       end
     end
